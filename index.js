@@ -36,6 +36,31 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.post('/login', (req, res) => {
+  // 클라가 요청한 이메일을 DB에서 검색
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.json({
+        loginSuccess: false,
+        message: '아이디가 일치하지 않습니다',
+      });
+    } else {
+      // 이메일이 DB에 있으면 비밀번호 대조
+      user.comparePassword(req.body.password, (err, isMatch) => {
+        if (!isMatch) {
+          return res.json({
+            loginSuccess: false,
+            message: '비밀번호가 일치하지 않습니다',
+          });
+        } else {
+          // 비밀번호 맞으면 Token 생성
+          user.genToken((err, user) => {});
+        }
+      });
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port : ${port}`);
 });
