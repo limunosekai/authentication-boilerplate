@@ -5,26 +5,25 @@ const app = express();
 const port = 5000;
 const { User } = require('./models/User');
 
+const config = require('./config/key');
+
 // application/x-www-form-urlencoded 데이터 가져옴
 app.use(bodyParser.urlencoded({ extended: true }));
 // application/json 데이터 가져옴
 app.use(bodyParser.json());
 
 mongoose
-  .connect(
-    'mongodb+srv://Limu:QAZwsx123@ytubecloneproject.rzk32.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log('MongoDB Connected..'))
   .catch((err) => console.log(err));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World!~하이루');
 });
 
 app.post('/register', (req, res) => {
