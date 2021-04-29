@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
 const app = express();
 const port = 5000;
 const { User } = require('./models/User');
-
+const { auth } = require('./middleware/auth');
 const config = require('./config/key');
 
 // application/x-www-form-urlencoded 데이터 가져옴
@@ -67,6 +68,21 @@ app.post('/api/users/login', (req, res) => {
         });
       });
     }
+  });
+});
+
+app.get('/api/users/auth', auth, (req, res) => {
+  // 미들웨어 통과 => auth 통과
+  res.status(200).json({
+    _id: req.user._id,
+    // 0 : 일반, 1 이상 : 관리자
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image,
   });
 });
 
