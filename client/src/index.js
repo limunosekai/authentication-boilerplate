@@ -11,7 +11,7 @@ import Reducer from './_reducers';
 
 import 'antd/dist/antd.css';
 
-const createStoreWithMiddlerware = applyMiddleware(
+const createStoreWithMiddleware = applyMiddleware(
   promiseMiddleware,
   ReduxThunk
 )(createStore);
@@ -19,7 +19,7 @@ const createStoreWithMiddlerware = applyMiddleware(
 ReactDOM.render(
   <React.StrictMode>
     <Provider
-      store={createStoreWithMiddlerware(
+      store={createStoreWithMiddleware(
         Reducer,
         window.__REDUX_DEVTOOLS_EXTENSION__ &&
           window.__REDUX_DEVTOOLS_EXTENSION__()
