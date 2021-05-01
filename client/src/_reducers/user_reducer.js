@@ -12,6 +12,11 @@ export default function (state = {}, action) {
         ...state,
         register: action.payload,
       };
+    case actions.AUTH_USER:
+      return {
+        ...state,
+        userData: action.payload,
+      };
     default:
       return state;
   }

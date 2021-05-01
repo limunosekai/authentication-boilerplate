@@ -26,3 +26,14 @@ export function registerUser(dataSubmit) {
     payload: request,
   };
 }
+
+export function auth() {
+  const request = axios.get('/api/users/auth').then((response) => {
+    return response.data;
+  });
+
+  return {
+    type: actions.AUTH_USER,
+    payload: request,
+  };
+}
